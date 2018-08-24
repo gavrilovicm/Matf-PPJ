@@ -1,0 +1,48 @@
+%option noyywrap
+%option noinput
+%option nounput
+%{
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#include"vektor.h"
+
+#include"y.tab.h"
+
+
+extern void yyerror(const char* s);
+
+%}
+
+%%
+
+"print" {
+	return print_tok;
+}
+
+[a-zA-Z]+ {
+	yylval.s = strdup(yytext);
+	return id_tok;
+}
+
+\-?[0-9]*(\.[0-9]+)? {
+	yylval.broj = atol(yytext);
+	return num;
+}
+
+
+[:=<>;(),-] {
+	return *yytext;
+}
+
+[ \n\t] {
+
+}
+
+. {
+	fprintf(stderr, "Leksicka greska, nepoznat token : %s\n", yytext);
+	exit(EXIT_FAILURE);
+}
+
+
+%%
