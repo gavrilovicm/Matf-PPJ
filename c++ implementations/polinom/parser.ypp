@@ -1,0 +1,66 @@
+%{
+#include<iostream>
+#include<string>
+#include<vector>
+#include<cstdlib>
+#include<map>
+#include"poli.hpp"
+
+extern int yylex();
+
+void yyerror(std::string s){
+	std::cout << "Sintaksna greska: " << s << std::endl;
+	exit(EXIT_FAILURE);
+}
+%}
+%union {
+	double double_type;
+	std::string* s;
+	Polinom *p;
+}
+%token<double_type> broj_token
+%type<p> E niz_koef
+
+%%
+/* gramatika */
+
+Program
+	: niz_naredbi
+	;
+
+niz_naredbi
+	: niz_naredbi naredba '\n'
+	|
+	;
+
+naredba
+	: E {
+		std::cout << *$1 << std::endl;
+	}
+	;
+
+E
+	: '<' niz_koef '>' {
+		$$ = $2;	
+	}
+	;
+
+niz_koef 
+	: niz_koef ',' broj_token{
+		$1->dodaj_koef($3);
+		$$ = $1;
+	}
+	| broj_token {
+		$$ = new Polinom();
+		$$->dodaj_koef($1);
+	}
+	;
+
+
+
+%%
+
+int main(){
+	yyparse();
+	exit(EXIT_FAILURE);
+}
