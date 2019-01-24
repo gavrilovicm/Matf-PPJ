@@ -11,7 +11,7 @@ std::ostream& operator << (std::ostream& out, const Polinom& pol){
 		if (pol.m_coef[i] > 0) {
 			out << " +" << pol.m_coef[i] << "x^" << i;
 		}else{
-			out << " -" << pol.m_coef[i] << "x^" << i;
+			out << " " << pol.m_coef[i] << "x^" << i;
 		}
 	}
 	return out;
