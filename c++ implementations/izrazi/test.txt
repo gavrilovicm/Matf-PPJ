@@ -1,0 +1,6 @@
+k=5
+p=7
+print k*p-10
+s = -k*4
+print s
+print (1+2+3+4+5)
