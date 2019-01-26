@@ -1,0 +1,5 @@
+P = {1,2,3};
+Q = 1..15;
+print {1,2,3};
+print P;
+print Q;

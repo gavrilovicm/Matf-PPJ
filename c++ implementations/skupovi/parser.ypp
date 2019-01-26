@@ -1,0 +1,92 @@
+%{
+#include<iostream>
+#include<string>
+#include<cstdlib>
+#include<vector>
+#include<map>
+#include<set>
+#include<vector>
+
+#include"skup.hpp"
+
+extern int yylex();
+
+std::map<std::string, Skup*> prom; 
+
+void yyerror(std::string s){
+	std::cerr << "Sintaksna greska: " << s << std::endl;
+	exit(EXIT_FAILURE);
+}
+
+%}
+
+%union{
+	std::string* s;
+	int int_type;
+	Skup* sk;
+}
+
+%token<s> id_tok
+%token<int_type> num_tok
+%token print_tok
+%type <sk> E niz_koef
+
+%%
+
+Program
+	: niz_naredbi
+	;
+
+niz_naredbi
+	: niz_naredbi naredba
+	| 
+	;
+
+naredba
+	: id_tok '=' E ';'{
+		prom[*$1] = $3;
+		delete $1;
+	}
+	| print_tok E ';'{
+		std::cout << *$2 << std::endl;
+	}
+	;
+
+E
+	: '{' niz_koef '}' {
+		$$ = $2;
+	}
+	| num_tok '.' '.' num_tok {
+		$$ = new Skup();
+		for (int i=$1; i<=$4; i++){
+			$$->add(i);
+		}
+	}
+	| id_tok {
+		auto finder = prom.find(*$1);
+		if (finder == prom.end()){
+			std::cerr << "Promenljiva \""<< *$1 << "\" ne postoji" << std::endl;
+		}else{
+			$$ = new Skup(*finder->second);
+		}
+		delete $1;
+	}
+	;
+
+niz_koef
+	: niz_koef ',' num_tok{
+		$$ = $1;
+		$$->add($3);
+	}
+	| num_tok {
+		$$ =  new Skup();
+		$$->add($1);
+	}
+	;
+
+%%
+
+int main(){
+	yyparse();
+	exit(EXIT_SUCCESS);
+}
