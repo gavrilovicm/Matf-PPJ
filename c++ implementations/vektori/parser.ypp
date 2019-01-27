@@ -1,0 +1,83 @@
+%{
+#include<iostream>
+#include<vector>
+#include<cstdlib>
+#include<string>
+#include<map>
+
+extern int yylex();
+
+void yyerror(const std::string& s){
+	std::cout << s << std::endl;
+	exit(EXIT_FAILURE);
+}
+
+std::map<std::string*, int> prom;
+
+%}
+
+
+%union{
+	double double_type;
+	std::string* s;
+}
+
+%token vector_token print_token
+%token<double> num_token
+%token<s> id_token
+
+
+
+%%
+
+Program
+	: niz_naredbi
+	;
+
+niz_naredbi
+	: niz_naredbi naredba ';'
+	| 
+	;
+
+naredba
+	: vector_token niz_definicija 
+	;
+
+niz_definicija
+	: niz_definicija ',' definicija
+	| definicija
+	;
+
+definicija
+	: id_token '=' def_vektora
+	| id_token
+	;
+
+def_vektora
+	: '[' num_token ',' num_token ']'
+	;
+
+
+%%
+
+int main(){
+	yyparse();
+	exit(EXIT_FAILURE);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
