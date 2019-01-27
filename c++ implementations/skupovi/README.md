@@ -1,6 +1,8 @@
 ## Zadatak sa casa, skupovi
 
+Postavka zadatka se nalazi u folderu "zadatak".
 Sa std::set moze da se radi na razlicite nacine, kod nije isti kao sa casa.
+
 
 ## Testiranje
 
@@ -13,5 +15,6 @@ Koriscenje iz termnala:
 make
 ./skupovi < tester.txt
 ```
+
 
 
