@@ -1,0 +1,123 @@
+%{
+#include<iostream>
+#include<string>
+#include<cstdlib>
+#include<map>
+#include<vector>
+
+
+#include"kutije.hpp"
+
+extern int yylex();
+
+void yyerror(const std::string& s){
+	std::cout << s << std::endl;
+}
+
+std::map<std::string, Kutija*> prom;
+%}
+
+%union{
+	std::string* s;
+	Kutija* k;
+	double d;
+	int i;
+}
+
+%token kutija_token prazna_token puna_token prikazi_token
+%token<s> id_token
+%token<d> real_num_token
+%token<i> int_num_token
+%type<k> E niz_brojeva
+
+
+
+%%
+
+Program
+	: niz_naredbi
+	;
+
+niz_naredbi
+	: niz_naredbi ';' naredba
+	| naredba
+	;
+
+naredba
+	: kutija_token kutija 
+	| prazna_token '(' E ')' {
+		if ($3->prazna())
+			std::cout << "Tacno" << std::endl;
+		else
+			std::cout << "Netacno" << std::endl;
+	}
+	| puna_token '(' E ')'  {
+		if ($3->puna())
+			std::cout << "Tacno" << std::endl;
+		else
+			std::cout << "Netacno" << std::endl;
+	}
+	| prikazi_token '(' E ')'  {
+		std::cout << *$3 << std::endl;
+	}
+	;
+
+kutija
+	: id_token '(' int_num_token ')' '=' E {
+		$6->setZapremina($3);
+		prom[*$1] = $6;
+		delete $1;
+	}
+	| id_token '(' int_num_token ')' {
+		Kutija* k = new Kutija();
+		k->setZapremina(0);
+		prom[*$1] = k;
+		delete k;
+		delete $1;
+	}
+	;
+
+E
+	: '[' niz_brojeva ']' {
+		$$ = $2;
+	}
+	| id_token {
+		auto finder = prom.find(*$1);
+		if (finder == prom.end()) {
+			std::cerr << "Promenljiva \" " << *$1 << " \" nije definisana" << std::endl;
+			exit(EXIT_FAILURE);
+		}
+		else
+			$$ = finder->second;
+	}
+	;
+
+
+niz_brojeva
+	: niz_brojeva ',' real_num_token {
+		$1->dodaj($3);
+		$$ = $1;
+	}
+	| niz_brojeva ',' int_num_token{
+		$1->dodaj($3);
+		$$ = $1;
+	}
+	| real_num_token {
+		$$ = new Kutija($1);
+	}
+	| int_num_token {
+		$$ = new Kutija($1);
+	}
+	;
+
+
+
+
+
+
+%%
+
+int main(){
+	yyparse();
+	exit(EXIT_SUCCESS);
+}
