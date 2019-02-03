@@ -17,7 +17,7 @@ Koriscenje iz termnala:
 
 ```
 make
-./skupovi < tester.txt
+./zadacic < tester.txt
 ```
 
 
