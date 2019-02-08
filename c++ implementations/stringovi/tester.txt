@@ -1,0 +1,18 @@
+string s = "abc";
+string s1;
+string t = s + "de"*2;
+s += "gh";
+print(s);
+s1 = s[2,2];
+reverse(t);
+length(s1*2);
+print(s1);
+print(t);
+sort(t);
+print(t);
+substring(s1, t);
+s1==t;
+upper(s1);
+print(s1);
+lower(s1);
+print(s1);
