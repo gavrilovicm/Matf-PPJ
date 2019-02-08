@@ -27,6 +27,7 @@ std::map<std::string, Polinom*> prom;
 
 %left '+' '-'
 %left '*'
+%left '\''
 %left UNMIN
 
 %%
