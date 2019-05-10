@@ -1,0 +1,55 @@
+%{
+#include<iostream>
+#include<vector>
+#include<string>
+
+
+extern int yylex();
+
+void yyerror(std::string s){
+	std::cout << s << ", Nesto ne valja.." << std::endl;
+	exit(EXIT_FAILURE);
+}
+
+%}
+
+%token<i> num_tok
+
+%left '+' '-'
+%left '*' '/'
+
+%union{
+	int i;
+}
+
+%%
+
+Program
+	: niz_linija
+	;
+niz_linija
+	: niz_linija linija
+	|
+	;
+
+linija
+	: E '\n'
+	;
+
+E
+	: '[' num_tok ',' num_tok ']'
+	| E '+' E
+	| E '-' E
+	| E '*' E
+	| E '/' E
+	| '(' E ')'
+	;
+
+
+
+%%
+
+int main(){
+	yyparse();
+	exit(EXIT_SUCCESS);
+}
