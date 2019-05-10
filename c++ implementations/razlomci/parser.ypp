@@ -7,7 +7,7 @@
 extern int yylex();
 
 void yyerror(std::string s){
-	std::cout << s << ", Nesto ne valja.." << std::endl;
+	std::cout << "Sintaksna greska: " << s << std::endl;
 	exit(EXIT_FAILURE);
 }
 
@@ -38,6 +38,7 @@ linija
 
 E
 	: '[' num_tok ',' num_tok ']'
+	| '[' num_tok ']'
 	| E '+' E
 	| E '-' E
 	| E '*' E
