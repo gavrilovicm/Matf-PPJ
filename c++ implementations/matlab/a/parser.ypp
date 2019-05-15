@@ -1,0 +1,88 @@
+%{
+#include<iostream>
+#include<string>
+#include<vector>
+#include"mat.hpp"
+
+extern int yylex();
+
+void yyerror(std::string s){
+	std::cerr << "Greska." << std::endl;
+	exit(EXIT_FAILURE);
+}
+
+%}
+
+%token disp_tok size_tok
+%token<i> num_tok
+%type<m> E niz_vrsta
+%type<vi> vrsta niz_brojeva
+
+%union{
+	int i;
+	Matrica* m;
+	std::vector<int>* vi;
+}
+
+%%
+
+Program
+	: niz_linija
+	;
+
+niz_linija
+	: niz_linija linija
+	| linija
+	;
+
+linija
+	: disp_tok '(' E ')' '\n' {
+		std::cout << *$3;
+	}
+	| size_tok '(' E ')' '\n' {
+		$3->velicina();
+	}
+	;
+
+E
+	: '[' niz_vrsta ']' {
+		$$ = $2;
+	}
+	;
+
+niz_vrsta
+	: niz_vrsta ';' vrsta {
+		$1->dodaj_vrstu(*$3);
+		delete $3;
+	}
+	| vrsta {
+		Matrica* niz = new Matrica();
+		niz->dodaj_vrstu(*$1);
+		$$ = niz;
+		delete $1;
+	}
+	;
+
+vrsta
+	: '[' niz_brojeva ']' {
+		$$ = $2;
+	}
+	;
+
+niz_brojeva
+	: niz_brojeva ',' num_tok {
+		$$->push_back($3);
+	}
+	| num_tok {
+		std::vector<int>* niz = new std::vector<int>();
+		niz->push_back($1);
+		$$ = niz;
+	}
+	;
+
+%%
+
+int main(){
+	yyparse();
+	exit(EXIT_SUCCESS);
+}
