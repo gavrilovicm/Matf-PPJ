@@ -8,5 +8,7 @@ A = [[1,2];[3,4]]
 disp(a)
 disp(A)
 B = [[1,1];[0,0]]
+e = A .+ B
 d = A .* B
+disp(e)
 disp(d)

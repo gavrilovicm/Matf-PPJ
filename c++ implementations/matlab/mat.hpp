@@ -15,6 +15,7 @@ public:
 	std::vector<std::vector<int>> getMatrica();
 	void velicina();
 	static Matrica* pomnozi(Matrica m1, Matrica m2);
+	static Matrica* saberi(Matrica m1, Matrica m2);
 
 	friend std::ostream& operator << (std::ostream& out, Matrica& m);
 };

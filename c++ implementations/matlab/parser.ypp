@@ -72,7 +72,7 @@ E
 		$$ = Matrica::pomnozi(*$1, *$3);
 	}
 	| E pokoordinatno_sabiranje_tok E {
-//		$$ = saberi(*$1, *$3);
+		$$ = Matrica::saberi(*$1, *$3);
 	}
 	;
 
