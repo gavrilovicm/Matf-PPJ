@@ -7,4 +7,6 @@ disp(A)
 A = [[1,2];[3,4]]
 disp(a)
 disp(A)
-disp(x)
+B = [[1,1];[0,0]]
+d = A .* B
+disp(d)

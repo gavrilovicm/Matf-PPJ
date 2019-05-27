@@ -16,11 +16,14 @@ std::map<char, Matrica*> prom;
 
 %}
 
-%token disp_tok size_tok
+%token disp_tok size_tok pokoordinatno_sabiranje_tok pokoordinatno_mnozenje_tok
 %token<i> num_tok
 %token<c> id_tok
 %type<m> E niz_vrsta
 %type<vi> vrsta niz_brojeva
+
+%left pokoordinatno_sabiranje_tok
+%left pokoordinatno_mnozenje_tok
 
 %union{
 	int i;
@@ -64,6 +67,12 @@ E
 		}else{
 			$$ = prom[$1];
 		}
+	}
+	| E pokoordinatno_mnozenje_tok E {
+		$$ = Matrica::pomnozi(*$1, *$3);
+	}
+	| E pokoordinatno_sabiranje_tok E {
+//		$$ = saberi(*$1, *$3);
 	}
 	;
 

@@ -16,7 +16,12 @@ disp {
 size {
 	return size_tok;
 }
-
+".+" {
+	return pokoordinatno_sabiranje_tok;
+}
+".*" {
+	return pokoordinatno_mnozenje_tok;
+}
 [a-zA-Z] {
 	if (((*yytext) >= 'a') && ((*yytext) <= 'z')){
 		yylval.c = *yytext;

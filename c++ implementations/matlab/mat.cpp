@@ -42,3 +42,19 @@ Matrica::Matrica(std::vector<std::vector<int>> m){
 void Matrica::velicina(){
 	std::cout << m_matrica.size() << "x" << m_matrica[0].size() << std::endl;
 }
+
+Matrica* Matrica::pomnozi(Matrica m1, Matrica m2){
+
+	std::vector<std::vector<int>> mat1, mat2, nova;
+	mat1 = m1.getMatrica();
+	mat2 = m2.getMatrica();
+
+	for (unsigned i=0; i<mat1.size(); i++){
+		std::vector<int> vrsta;
+		for (unsigned j=0; j<mat1[i].size(); j++){
+			vrsta.push_back(mat1[i][j] * mat2[i][j]);
+		}
+		nova.push_back(vrsta);
+	}
+	return new Matrica(nova);
+}
