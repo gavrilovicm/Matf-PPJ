@@ -90,7 +90,7 @@ E
 			if (m1[0].size() != m2[0].size()){
 				std::cout << "Dimenzije se ne poklapaju" << std::endl;
 			}else{
-				$$ = Matrica::pomnozi(*$1, *$3);
+				$$ = Matrica::saberi(*$1, *$3);
 			}
 		}
 	}
