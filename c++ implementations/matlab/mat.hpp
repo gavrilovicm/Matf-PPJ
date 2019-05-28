@@ -17,6 +17,7 @@ public:
 	static Matrica* pomnozi(Matrica m1, Matrica m2);
 	static Matrica* saberi(Matrica m1, Matrica m2);
 	Matrica* pomnozi1(Matrica m1);
+	Matrica* transponuj();
 
 	friend std::ostream& operator << (std::ostream& out, Matrica& m);
 };

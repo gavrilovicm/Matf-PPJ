@@ -96,3 +96,19 @@ Matrica* Matrica::pomnozi1(Matrica M){
 
 	return new Matrica(nova);
 }
+Matrica* Matrica::transponuj(){
+	std::vector<std::vector<int>> nova, pom;
+
+	pom = this->getMatrica();
+	unsigned int n = pom.size();
+	unsigned int m = pom[0].size();
+
+	for (unsigned i=0; i<n; i++){
+		std::vector<int> p;
+		for (unsigned j=0; j<m; j++){
+			p.push_back(pom[j][i]);
+		}
+		nova.push_back(p);
+	}
+	return new Matrica(nova);
+}

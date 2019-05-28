@@ -16,7 +16,7 @@ std::map<char, Matrica*> prom;
 
 %}
 
-%token disp_tok size_tok pokoordinatno_sabiranje_tok pokoordinatno_mnozenje_tok
+%token disp_tok size_tok pokoordinatno_sabiranje_tok pokoordinatno_mnozenje_tok transp_tok
 %token<i> num_tok
 %token<c> id_tok
 %type<m> E niz_vrsta
@@ -24,6 +24,7 @@ std::map<char, Matrica*> prom;
 
 %left pokoordinatno_sabiranje_tok
 %left pokoordinatno_mnozenje_tok '*'
+%left transp_tok
 
 %union{
 	int i;
@@ -101,6 +102,9 @@ E
 		}else{
 			$$ = $1->pomnozi1(*$3);
 		}
+	}
+	| E transp_tok {
+		$$ = $1->transponuj();
 	}
 	;
 
