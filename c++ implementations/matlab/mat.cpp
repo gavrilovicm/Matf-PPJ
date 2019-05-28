@@ -74,3 +74,25 @@ Matrica* Matrica::saberi(Matrica m1, Matrica m2){
 	}
 	return new Matrica(nova);
 }
+Matrica* Matrica::pomnozi1(Matrica M){
+	std::vector<std::vector<int>> nova, mat1, mat2;
+	mat1 = this->getMatrica();
+	mat2 = M.getMatrica();
+	unsigned n = mat2.size();
+	unsigned m = mat2[0].size();
+
+
+	for (unsigned l = 0; l<mat1.size(); ++l){
+		std::vector<int> nova_prim;
+		for (unsigned i=0; i<m; ++i){
+			int prom = 0;
+			for (unsigned j=0; j<n; ++j){
+				prom += mat1[l][j] * mat2[j][i];
+			}
+			nova_prim.push_back(prom);
+		}
+		nova.push_back(nova_prim);
+	}
+
+	return new Matrica(nova);
+}

@@ -37,7 +37,7 @@ size {
 	yylval.i = atoi(yytext);
 	return num_tok;
 }
-[(),[\];\n=-] {
+[(),*[\];\n=-] {
 	return *yytext;
 }
 
